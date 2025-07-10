@@ -1,0 +1,36 @@
+<div *ngIf="loading" class="alert alert-info">🔄 Loading...</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover" *ngIf="!loading && displayed.length > 0">
+        <thead class="table-dark">
+            <tr>
+                <th>Mission Name</th>
+                <th>Date</th>
+                <th>Rocket</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let l of displayed">
+                <td>{{ l.name }}</td>
+                <td>{{ l.date_utc | date:'medium':'en-IN' }}</td>
+                <td>{{ rockets.get(l.rocket)?.name || 'Loading...' }}</td>
+                <td>
+                    <span *ngIf="!l.upcoming" [style.color]="l.success ? 'green' : 'red'">
+                        {{ l.success ? 'Success' : 'Failure' }}
+                    </span>
+                    <span *ngIf="l.upcoming" style="color: gray">Upcoming</span>
+                </td>
+                <td>
+                    <a [routerLink]="['/launch', l.id]" class="btn btn-sm btn-outline-primary">View Details</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="!loading && displayed.length === 0" class="text-muted mt-3">
+    No launches found.
+</div>
