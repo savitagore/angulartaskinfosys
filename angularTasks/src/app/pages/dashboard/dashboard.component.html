@@ -1,6 +1,9 @@
-<div *ngIf="loading" class="alert alert-info">🔄 Loading...</div>
-<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
-
+<nav class="btn-group mb-3">
+    <button class="btn btn-outline-primary" (click)="toggleView('past')" [disabled]="view==='past'">Past
+        Launches</button>
+    <button class="btn btn-outline-secondary" (click)="toggleView('upcoming')" [disabled]="view==='upcoming'">Upcoming
+        Launches</button>
+</nav>
 <div class="table-responsive">
     <table class="table table-bordered table-hover" *ngIf="!loading && displayed.length > 0">
         <thead class="table-dark">

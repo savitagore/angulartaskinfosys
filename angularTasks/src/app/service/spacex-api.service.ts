@@ -2,26 +2,38 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { catchError, forkJoin, Observable, retry, throwError } from 'rxjs';
+import { Launch, Payload, Rocket } from '../core/interface/interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SpacexApiService {
-  private baseUrl = 'https://api.spacexdata.com/v4';
+  private base = 'https://api.spacexdata.com/v4';
 
   constructor(private http: HttpClient) {}
 
-  getPastLaunches(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/launches/past`);
+  getPast(limit = 0, offset = 0): Observable<Launch[]> {
+    const params: any = {};
+    if (limit) {
+      params.limit = limit;
+      params.offset = offset;
+    }
+    return this.http.get<Launch[]>(`${this.base}/launches/past`, { params });
   }
 
-  getUpcomingLaunches(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/launches/upcoming`);
+  getUpcoming(): Observable<Launch[]> {
+    return this.http.get<Launch[]>(`${this.base}/launches/upcoming`);
   }
 
-  getRocketsByIds(ids: string[]): Observable<any[]> {
-    return forkJoin(
-      ids.map((id) => this.http.get(`${this.baseUrl}/rockets/${id}`))
-    );
+  getById(id: string): Observable<Launch> {
+    return this.http.get<Launch>(`${this.base}/launches/${id}`);
+  }
+
+  getRocket(id: string): Observable<Rocket> {
+    return this.http.get<Rocket>(`${this.base}/rockets/${id}`);
+  }
+
+  getPayload(id: string): Observable<Payload> {
+    return this.http.get<Payload>(`${this.base}/payloads/${id}`);
   }
 }
