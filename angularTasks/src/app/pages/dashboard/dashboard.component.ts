@@ -18,23 +18,28 @@ export class DashboardComponent {
   rockets = new Map<string, Rocket>();
   loading = false;
   error = '';
-  pageSize = 10;
-  currentPage = 1;
+  displayed: Launch[] = [];
   sortKey: 'date' | 'name' = 'date';
   sortAsc = false;
+  pageSize = 12;
+  currentPage = 1;
   totalCount = 0;
 
-  displayed: any[] = [];
+  filterForm = new FormGroup({
+    year: new FormControl(''),
+    status: new FormControl('all'),
+  });
 
   constructor(private api: SpacexApiService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.filterForm.valueChanges.subscribe(() => this.applyFilters());
     this.loadLaunches();
   }
 
-  toggleView(view: 'past' | 'upcoming') {
-    console.log(' Toggling view to:', view);
-    this.view = view;
+  toggleView(v: 'past' | 'upcoming') {
+    this.view = v;
+    this.currentPage = 1;
     this.loadLaunches();
   }
 
@@ -52,7 +57,7 @@ export class DashboardComponent {
     fetch.subscribe({
       next: (data) => {
         this.launches = data;
-        this.totalCount = data.length + (this.view === 'past' ? 0 : 0); // adapt if API supports count
+        this.totalCount = data.length + (this.view === 'past' ? 0 : 0);
         this.loadRockets();
         this.applyFilters();
         this.loading = false;
@@ -62,40 +67,6 @@ export class DashboardComponent {
         this.loading = false;
       },
     });
-  }
-
-  // Reactive Form
-  filterForm = new FormGroup({
-    year: new FormControl(''),
-    status: new FormControl('all'),
-  });
-
-  applyFilters() {
-    const { year, status } = this.filterForm.value;
-    let filtered = [...this.launches];
-
-    if (year)
-      filtered = filtered.filter(
-        (l) => new Date(l.date_utc).getFullYear().toString() === year
-      );
-    if (status !== 'all') {
-      filtered = filtered.filter((l) =>
-        status === 'success'
-          ? l.success
-          : status === 'failure'
-          ? l.success === false
-          : true
-      );
-    }
-
-    filtered.sort((a, b) => {
-      const key = this.sortKey === 'date' ? 'date_utc' : 'name';
-      return this.sortAsc
-        ? a[key].localeCompare(b[key])
-        : b[key].localeCompare(a[key]);
-    });
-
-    this.displayed = filtered;
   }
 
   loadRockets() {
@@ -113,5 +84,52 @@ export class DashboardComponent {
     } else {
       this.applyFilters();
     }
+  }
+  applyFilters() {
+    const { year, status } = this.filterForm.value;
+    let filtered = [...this.launches];
+
+    if (year)
+      filtered = filtered.filter(
+        (l) => new Date(l.date_utc).getFullYear().toString() === year
+      );
+
+    if (status !== 'all') {
+      filtered = filtered.filter((l) =>
+        status === 'success'
+          ? l.success
+          : status === 'failure'
+          ? l.success === false
+          : true
+      );
+    }
+
+    // Sort
+    filtered.sort((a, b) => {
+      const key = this.sortKey === 'date' ? 'date_utc' : 'name';
+      return this.sortAsc
+        ? a[key].localeCompare(b[key])
+        : b[key].localeCompare(a[key]);
+    });
+
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.displayed = filtered.slice(start, end);
+  }
+
+  changeSort(key: 'date' | 'name') {
+    this.sortKey = key;
+    this.sortAsc = this.sortKey === key ? !this.sortAsc : false;
+    this.applyFilters();
+  }
+
+  retry() {
+    this.loadLaunches();
+  }
+
+  goPage(n: number) {
+    if (n < 1) return;
+    this.currentPage = n;
+    this.loadLaunches();
   }
 }
