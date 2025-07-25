@@ -1,0 +1,31 @@
+<h2 class="my-4"> Rockets</h2>
+
+<div *ngIf="loading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-2">Loading rockets...</p>
+</div>
+
+<div *ngIf="error" class="alert alert-danger text-center">
+    {{ error }}
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="!loading && rockets.length">
+    <div class="col" *ngFor="let rocket of rockets">
+        <div class="card h-100  shadow-sm border-secondary">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{ rocket.name }}</h5>
+                <p class="card-text"><strong>Type:</strong> {{ rocket.type }}</p>
+                <p class="card-text"><strong>Stages:</strong> {{ rocket.stages }}</p>
+                <p class="card-text">
+                    {{ rocket.description | slice:0:150 }}{{ rocket.description.length > 150 ? '...' : '' }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!loading && !rockets.length" class="text-center text-muted mt-3">
+    No rockets found.
+</div>

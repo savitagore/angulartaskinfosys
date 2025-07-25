@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
-import { SpacexApiService } from '../../service/spacex-api.service';
+import { Launch, Rocket } from '../../core/interface/Interface';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { SpacexApiService } from '../../core/service/spacex-api.service';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Launch, Rocket } from '../../core/interface/interface';
 import { forkJoin } from 'rxjs';
 
 @Component({

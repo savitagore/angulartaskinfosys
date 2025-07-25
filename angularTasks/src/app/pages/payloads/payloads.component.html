@@ -1,0 +1,21 @@
+<h2>Payloads</h2>
+
+<div *ngIf="loading">Loading payloads...</div>
+<div *ngIf="error" class="text-danger">{{ error }}</div>
+
+<table *ngIf="!loading && payloads.length" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of payloads">
+            <td>{{ p.type }}</td>
+            <td>{{ p.orbit }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="!loading && !payloads.length">No payloads found.</div>

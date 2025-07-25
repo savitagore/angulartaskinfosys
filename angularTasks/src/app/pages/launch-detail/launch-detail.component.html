@@ -23,11 +23,11 @@
             <p>
                 <strong>
                     {{ launch.upcoming ? ' Upcoming' : (launch.success ? ' Success' : ' Failure') }}
-                </strong>
-            </p>
+                    </strong>
+                    </p>
             <p *ngIf="launch.details">{{ launch.details }}</p>
         </div>
-    </div>
+        </div>
 
     <div *ngIf="rocket" class="row mb-4">
         <div class="col-md-6">
@@ -35,9 +35,9 @@
             <p><strong>Type:</strong> {{ rocket.type }}</p>
             <p><strong>Stages:</strong> {{ rocket.stages }}</p>
             <p>{{ rocket.description }}</p>
-        </div>
-        <div class="col-md-6 text-center">
-            <img *ngIf="rocket.flickr_images?.length" [src]="rocket.flickr_images[0]"
+            </div>
+            <div class="col-md-6 text-center">
+                <img *ngIf="rocket.flickr_images?.length" [src]="rocket.flickr_images[0]"
                 class="img-fluid rounded shadow-sm my-2" [alt]="rocket.name" style="max-height: 300px;" />
         </div>
     </div>
@@ -52,10 +52,10 @@
                         <div class="col-md-4"><strong>Mass:</strong> {{ p.mass_kg || 'Unknown' }} kg</div>
                         <div class="col-md-4"><strong>Orbit:</strong> {{ p.orbit }}</div>
                     </div>
-                </li>
-            </ul>
+                    </li>
+                    </ul>
         </div>
-    </div>
+        </div>
 
     <div class="row">
         <div class="col">
@@ -70,7 +70,7 @@
                 <li *ngIf="launch.links?.reddit?.article as article">
                     <a [href]="article" target="_blank"> Reddit Discussion</a>
                 </li>
-            </ul>
-        </div>
-    </div>
-    </div>
+                </ul>
+                </div>
+                </div>
+                </div>

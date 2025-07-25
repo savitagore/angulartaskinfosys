@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angularTasks": {
+    "AngularTask": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular-tasks",
+            "outputPath": "dist/angular-task",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -59,10 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angularTasks:build:production"
+              "buildTarget": "AngularTask:build:production"
             },
             "development": {
-              "buildTarget": "angularTasks:build:development"
+              "buildTarget": "AngularTask:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,6 +94,6 @@
     }
   },
   "cli": {
-    "analytics": "7080f62c-a703-46da-b428-8ec2a93da395"
+    "analytics": "9683a099-c8fd-45a8-ad76-0eee8ef3bbf6"
   }
 }

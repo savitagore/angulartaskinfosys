@@ -1,9 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Launch, Payload, Rocket } from '../../core/interface/interface';
+import { Launch, Payload, Rocket } from '../../core/interface/Interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SpacexApiService } from '../../service/spacex-api.service';
+import { SpacexApiService } from '../../core/service/spacex-api.service';
 import { forkJoin } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-launch-detail',

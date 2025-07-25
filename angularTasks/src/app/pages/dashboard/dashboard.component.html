@@ -63,25 +63,26 @@
                         </a>
                     </div>
                     <!-- <a [routerLink]="['/launch', l.id]" class="btn btn-sm text-white rounded-pill view-details-btn">
-                                                                View Details
-                                                            </a> -->
-                    </div>
-                    </div>
-                    </div>
-                    </div>
+                                            View Details
+                                        </a> -->
+                </div>
+            </div>
+        </div>
+    </div>
 
-<nav *ngIf="view==='past' && !loading" class="my-3">
-    <ul class="pagination">
-        <li class="page-item" [class.disabled]="currentPage===1">
-            <button class="page-link" (click)="goPage(currentPage-1)">Previous</button>
-        </li>
-        <li class="page-item active">
-            <span class="page-link">{{currentPage}}</span>
-        </li>
-        <li class="page-item" [class.disabled]="displayed.length < pageSize">
-            <button class="page-link" (click)="goPage(currentPage+1)">Next</button>
-        </li>
-    </ul>
-</nav>
+
+    <nav *ngIf="view==='past' && !loading" class="my-3">
+        <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage===1">
+                <button class="page-link" (click)="goPage(currentPage-1)">Previous</button>
+            </li>
+            <li class="page-item active">
+                <span class="page-link">{{currentPage}}</span>
+            </li>
+            <li class="page-item" [class.disabled]="displayed.length < pageSize">
+                <button class="page-link" (click)="goPage(currentPage+1)">Next</button>
+            </li>
+        </ul>
+    </nav>
 
 </div>
